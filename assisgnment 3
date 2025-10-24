@@ -1,1 +1,68 @@
+ Use free tools to identify common vulnerabilities on your computer.
+
+step 1:Install OpenVAS or Nessus Essentials.
+install nessus essentials or openvas in your system.
+you can install nessus essentials in kali linux too.
+Go to https://www.tenable.com/products/nessus/nessus-essentials.
+
+step 2:Set up scan target as your local machine IP or localhost.
+Click “New Scan” → choose advance scan (this is your full scan template).
+In the Targets field, enter your local IP or localhost (127.0.0.1).
+You can find your IP using:
+Windows: ipconfig
+Linux: ifconfig or hostname -I
+iam using advance scan in  vulnerabilities section.
+
+step 3: Start a Full Vulnerability Scan.
+Save the scan, then click “Launch”.
+Nessus will begin scanning all ports and services on your machine.
+and Wait until the scan status changes to Completed.
+Click the scan name to view results.
+
+step 4:Review the report for vulnerabilities and severity.
+Nessus categorizes vulnerabilities by severity:
+dark red-Critical
+red-High
+orange- Medium
+yellow-Low
+blue-Info
+You can expand each item to read the description, risk, and remediation.
+
+step 5:Research simple fixes or mitigations for found vulnerabilities.
+vulnerabilites i found : 1. SSL Certificate Cannot Be Trusted
+ 2. SMB Signing Not Required which are both in meduim severity level.
+their CVSS SCORE:6.5 and 5.3.
+simple fix for this vulnerabilites: 1. Use a trusted certificate from a valid CA, or import the self-signed certificate into your system’s trust store if used internally.
+2. Enable SMB signing on your Windows machine via Group Policy or registry.
+
+step 6: Document the most critical vulnerabilities.
+1. SSL Certificate Cannot Be Trusted
+Severity:  Medium
+CVSS v3.0 Score: 6.5
+Plugin ID: 51192
+Description:
+Nessus detected that the SSL/TLS certificate used by the target system cannot be trusted.
+This usually happens when:
+The certificate is self-signed, or It was issued by an untrusted Certificate Authority (CA), orThe certificate has expired or mismatched hostnames.
+Impact:
+Attackers could intercept or impersonate secure connections, leading to potential man-in-the-middle (MITM) attacks or loss of sensitive data.
+Remediation / Fix:
+-Replace the self-signed or untrusted SSL certificate with one issued by a trusted CA.
+-Ensure the certificate matches the correct domain name and is not expired.
+-For internal networks, import your self-signed certificate into the trusted certificate store.
+2.SMB Signing Not Required
+Severity:  Medium
+CVSS v3.0 Score: 5.3
+Plugin ID: 57608
+Description:
+The SMB (Server Message Block) service on this system does not require message signing.
+This allows an attacker to intercept or alter SMB traffic between clients and servers.
+Impact:
+Lack of SMB signing enables man-in-the-middle (MITM) attacks, allowing attackers to modify files or credentials transmitted over SMB.
+Remediation / Fix:
+Enable SMB signing to enforce message integrity.
+In Windows, open Group Policy Editor →Computer Configuration → Windows Settings → Security Settings → Local Policies → Security Optionsand enable:
+-Microsoft network client: Digitally sign communications (always).
+-Microsoft network server: Digitally sign communications (always).
+-Restart the machine for the policy to apply.
 
